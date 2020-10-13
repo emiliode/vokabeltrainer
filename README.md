@@ -7,4 +7,8 @@
 | :-- | :-------------------------  | :------------------------ |
 | 1  | Hallo                       | hello                      |
 
+## Setup
+
+*  git pull
+*  pip install -r requirements.txt
 
