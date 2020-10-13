@@ -10,13 +10,6 @@ def hello():
     vocs = get_vocs("german-englisch")
     print("test")
     return render_template("index.html", voc=vocs[0][1])
-
-
-
-
-
-    
-    
-
+print("hallo")
 if __name__ == "__main__":
     app.run(debug=True)
