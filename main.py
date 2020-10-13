@@ -9,13 +9,6 @@ def hello():
         print("\n Got: "+request.form["eingabe"])
     vocs = get_vocs("german-englisch")
     return render_template("index.html", voc=vocs[0][1])
-
-
-
-
-
-    
-    
-
+print("hallo")
 if __name__ == "__main__":
     app.run(debug=True)
