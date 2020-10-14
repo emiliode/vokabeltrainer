@@ -9,7 +9,6 @@ def hello():
     if request.method == "POST":
         print("\n Got: "+request.form["eingabe"])
     vocs = get_vocs("german-englisch")
-    print("test")
     return render_template("index.html", voc=vocs[0][1])
 if __name__ == "__main__":
     app.run(debug=True)
