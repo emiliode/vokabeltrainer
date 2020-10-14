@@ -1,11 +1,12 @@
 # Vokabeltrainer
 
-## db Structure
+## Endpints
+### /
+haupt website GET und POST
 
-### vocs: 
-| id | lang1 e.g german |lang2 e.g englisch|
-| :-- | :-------------------------  | :------------------------ |
-| 1  | Hallo                       | hello                      |
+### /add
+
+nur POST json schicken um vokabel hinzuzufügen 
 
 ## Setup
 

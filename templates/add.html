@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add a vocable</title>
+    </head>
+    <body>
+        <form method="POST" action="/add">
+            <label for="lang">Languages to add Vocabulary in</label>
+            <select name="lang" id="lang">
+                {%for lang in languages%}
+                <option value="{{lang}}">{{lang|replace("_", " ")}}</option>
+                {%endfor%}
+            </select>
+            <label for="voc1">word in first language</label>
+            <input type="text" name="voc1" id="voc1">
+            <label for="voc2">word in second language</label>
+            <input type="text" name="voc2" id="voc2">
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
