@@ -49,5 +49,10 @@ def add():
         voc2 = request.form["voc2"]
         add_voc(lang,voc1,voc2)
     return render_template
+@app.route("/delete", methods=["POST", "GET"])
+def delete():
+    #TODO: let user delete things
+    return {}
+    
 if __name__ == "__main__":
     app.run(debug=True)
