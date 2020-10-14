@@ -6,7 +6,7 @@ haupt website GET und POST
 
 ### /add
 
-nur POST json schicken um vokabel hinzuzufügen 
+### /learn
 
 ## Setup
 
