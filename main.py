@@ -61,7 +61,13 @@ def add():
 
 @app.route("/delete", methods=["POST", "GET"])
 def delete():
-    #TODO: let user delete things
+    if request.method == "POST":
+        json = request.json
+        if json["mode"] == "1":
+            #delete table
+            delete_table(json["lang"])
+        else:
+            delete_voc(json["lang"], json["voc"])
     return {}
 
 
