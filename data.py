@@ -17,6 +17,12 @@ def delete_table(name):
     conn.close()
 
 
+def delete_voc(lang, voc):
+    conn = sqlite3.connect("vocabulary.db")
+    conn.cursor().execute(f"""DELETE FROM {lang}
+                            WHERE {lang.split('_')[0]} = {voc}""")
+
+
 def get_vocs(lang):
     """loads all vocabularys from a database
 
