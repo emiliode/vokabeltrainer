@@ -53,13 +53,18 @@ def add_voc(lang, voc1, voc2):
     lang2 = lang.split("_")[1]
     print(f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
     try:
-        cur.execute(f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
+        cur.execute(
+            f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
     except:
         create_table(lang)
-        cur.execute(f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
+        cur.execute(
+            f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
     conn.commit()
     conn.close()
 
 
 if __name__ == "__main__":
-    add_voc("german_englisch", "ich","I")
+    with open("list.txt") as f:
+        for line in f.readlines():
+            add_voc("german_englisch", line.split(" ")[
+                    0], line.split(" ")[1].replace("\n", ""))

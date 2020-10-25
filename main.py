@@ -17,13 +17,17 @@ def hello():
         print("\n Got: " + request.form["eingabe"])
         try:
             index = int(request.cookies.get("usedvocs").split(" ")[-1])
+            # anzahl richtiger antworten
+            accuracy = int(request.cookies.get("accuracy"))
         except:
             return render_template(
                 "learn.html",
                 voc="Oops something went wrong please go back to the main page"
             )
+        print(vocs[index])
         if vocs[index][2] == request.form["eingabe"]:
             richtig = "Juhu richtig"
+            accuracy += 1
         else:
             richtig = "leider falsch"
     print("test")
@@ -32,12 +36,19 @@ def hello():
         usedvocs = []
     else:
         usedvocs = request.cookies.get("usedvocs").split(" ")
-    if len(usedvocs) >= len(vocs):
 
+    if request.cookies.get("accuracy") is None:
+        accuracy = 0
+    else:
+        accuracy = int(request.cookies.get("accuracy"))
+
+    if len(usedvocs) >= len(vocs):
         resp = make_response(
-            render_template("learn.html", voc="YOU FINISHED", richtig=richtig))
+            render_template("learn.html", voc="YOU FINISHED", richtig=richtig, accuracy=accuracy))
         resp.set_cookie("usedvocs", "", expires=0)
+        resp.set_cookie("accuracy", accuracy, expires=0)
         return resp
+
     ivoc = random.randint(0, len(vocs) - 1)
     while str(ivoc) in usedvocs:
         ivoc = random.randint(0, len(vocs) - 1)
@@ -46,6 +57,7 @@ def hello():
     resp = make_response(
         render_template("learn.html", voc=vocs[ivoc][1], richtig=richtig))
     resp.set_cookie("usedvocs", " ".join(usedvocs))
+    resp.set_cookie("accuracy", str(accuracy))
     return resp
 
 
@@ -63,8 +75,8 @@ def add():
 def delete():
     if request.method == "POST":
         print(request.json)
-        delete_voc("german_englisch",request.json["id"])
-    return render_template("delete.html",vocs=get_vocs("german_englisch"))
+        delete_voc("german_englisch", request.json["id"])
+    return render_template("delete.html", vocs=get_vocs("german_englisch"))
 
 
 if __name__ == "__main__":
