@@ -1,26 +1,31 @@
 import sqlite3
+databasename = "vocs.db"
 
 
 def create_table(lang):
-    conn = sqlite3.connect("vocabulary.db")
+    conn = sqlite3.connect(databasename)
     conn.cursor().execute(f""" CREATE TABLE {lang}(
-    id INT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     {lang.split('_')[0]} CHAR(25),
     {lang.split('_')[1]} CHAR(25)
     );""")
     conn.commit()
-
-
-def delete_table(name):
-    conn = sqlite3.connect("vocabulary.db")
-    conn.cursor().execute(f"DROP TABLE {name}")
     conn.close()
 
 
-def delete_voc(lang, voc):
-    conn = sqlite3.connect("vocabulary.db")
+def delete_table(name):
+    conn = sqlite3.connect(databasename)
+    conn.cursor().execute(f"DROP TABLE {name}")
+    conn.commit()
+    conn.close()
+
+
+def delete_voc(lang, id):
+    conn = sqlite3.connect(databasename)
     conn.cursor().execute(f"""DELETE FROM {lang}
-                            WHERE {lang.split('_')[0]} = {voc}""")
+                            WHERE id = {id}""")
+    conn.commit()
+    conn.close()
 
 
 def get_vocs(lang):
@@ -32,40 +37,29 @@ def get_vocs(lang):
     Returns:
         [list]: [list of tuples of all vocabulary]
     """
-    conn = sqlite3.connect("vocabulary.db")
+    conn = sqlite3.connect(databasename)
     cur = conn.cursor()
 
     cur.execute("SELECT  * FROM " + lang)
     rows = cur.fetchall()
-    print("\n [+] Querying the data \n")
+    conn.commit()
     return rows
 
 
 def add_voc(lang, voc1, voc2):
-    conn = sqlite3.connect("vocabulary.db")
+    conn = sqlite3.connect(databasename)
     cur = conn.cursor()
     lang1 = lang.split("_")[0]
     lang2 = lang.split("_")[1]
+    print(f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
     try:
-        cur.execute("SELECT max(id) FROM " + lang)
-        print(cur.fetchone()[0])
-        try:
-            index = int(cur.fetchone()[0]) + 1
-        except:
-            index = 0
+        cur.execute(f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
     except:
         create_table(lang)
-        cur.execute("SELECT max(id) FROM " + lang)
-        index = 0
-
-    #cur.execute(f"INSERT INTO vocs (id ,{lang1},{lang2}) VALUES ({id},{voc1},{voc2})")
-    cur.execute(
-        f"INSERT INTO {lang} (id ,{lang1},{lang2}) VALUES ({index},'{voc1}','{voc2}')"
-    )
+        cur.execute(f"INSERT INTO {lang} ( {lang1},{lang2}) VALUES ( '{voc1}','{voc2}')")
     conn.commit()
+    conn.close()
 
 
 if __name__ == "__main__":
-    conn = sqlite3.connect("vocabulary.db")
-    cur = conn.cursor()
-    cur.execute("DROP TABLE german_french")
+    add_voc("german_englisch", "ich","I")

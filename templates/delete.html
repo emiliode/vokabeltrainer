@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Delete vocs</title>
+        <script type="text/javascript" src="static/main.js"></script>
+    </head>
+    <body>
+        <h1>Delete items </h1>
+        {%for item in vocs%}
+                <label>{{item[1]}}  {{item[2]}}</label>
+                <button id={{item[0]}} type="button" onclick="deletevoc(this)">delete</button>
+
+        {%endfor %}
+    </body>
+</html>

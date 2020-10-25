@@ -56,19 +56,15 @@ def add():
         voc1 = request.form["voc1"]
         voc2 = request.form["voc2"]
         add_voc(lang, voc1, voc2)
-    return render_template
+    return render_template("add.html", languages=["german_englisch"])
 
 
 @app.route("/delete", methods=["POST", "GET"])
 def delete():
     if request.method == "POST":
-        json = request.json
-        if json["mode"] == "1":
-            #delete table
-            delete_table(json["lang"])
-        else:
-            delete_voc(json["lang"], json["voc"])
-    return {}
+        print(request.json)
+        delete_voc("german_englisch",request.json["id"])
+    return render_template("delete.html",vocs=get_vocs("german_englisch"))
 
 
 if __name__ == "__main__":
